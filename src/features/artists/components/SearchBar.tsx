@@ -4,16 +4,15 @@ interface Props {
   onSearch: (term: string) => void
   isPending: boolean
 }
+const normalizeSearchTerm = (value: string) => value.trim().replace(/\s+/g, ' ')
 
 export function SearchBar({ onSearch, isPending }: Props) {
   const [inputValue, setInputValue] = useState('')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const trimmed = inputValue.trim()
-    if (trimmed) onSearch(trimmed)
+    onSearch(normalizeSearchTerm(inputValue))
   }
-
   return (
     <form role="search" onSubmit={handleSubmit} className="relative flex items-center">
       <label htmlFor="artist-search" className="sr-only">
@@ -40,7 +39,14 @@ export function SearchBar({ onSearch, isPending }: Props) {
         id="artist-search"
         type="search"
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={(e) => {
+          const nextValue = e.target.value
+          setInputValue(nextValue)
+
+          if (nextValue === '') {
+            onSearch('')
+          }
+        }}
         placeholder="Search artists…"
         aria-busy={isPending}
         className="w-full rounded-2xl border border-gray-200 bg-white py-3.5 pl-12 pr-28 text-base text-gray-900 shadow-sm placeholder:text-gray-400 transition focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300"
@@ -48,7 +54,7 @@ export function SearchBar({ onSearch, isPending }: Props) {
 
       <button
         type="submit"
-        disabled={isPending || !inputValue.trim()}
+        disabled={isPending || !normalizeSearchTerm(inputValue)}
         className="absolute right-2 flex items-center gap-1.5 rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isPending && (

@@ -58,11 +58,13 @@ export function ArtistDetails() {
         </Link>
 
         <div className="mt-4 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
-          <SafeImage
-            src={artist.imageUrl}
-            alt={artist.name}
-            className="h-64 w-full object-cover sm:h-80"
-          />
+          <div className="flex justify-center bg-gray-50 px-6 pt-6 pb-4">
+            <SafeImage
+              src={artist.imageUrl}
+              alt={artist.name}
+              className="h-48 w-48 rounded-2xl object-cover shadow-md sm:h-56 sm:w-56"
+            />
+          </div>
           <div className="space-y-6 p-6">
             <h1 className="text-3xl font-bold text-gray-900">{artist.name}</h1>
 
@@ -79,6 +81,7 @@ export function ArtistDetails() {
 
               {artist.biography && (
                 <button
+                  type="button"
                   onClick={() => setIsExpanded((prev) => !prev)}
                   className="mt-2 text-sm font-medium text-gray-700 hover:text-gray-900"
                 >
