@@ -1,9 +1,9 @@
-// export interface RawArtist {
-//   idArtist: string
-//   strArtist: string
-//   strArtistThumb: string | null
-//   strBiographyEN: string | null
-// }
+export interface RawArtist {
+  idArtist: string
+  strArtist: string
+  strArtistThumb: string | null
+  strBiographyEN: string | null
+}
 
 export interface RawSong {
   idTrack: string
@@ -12,19 +12,10 @@ export interface RawSong {
   strAlbum: string | null
 }
 
-export interface ArtistSearchResponse {
-  artists: RawArtist[] | null
-}
-
-export interface TopSongsResponse {
-  track: RawSong[] | null
-}
-export interface RawArtist {
-  idArtist: string
-  strArtist: string
-  strArtistThumb: string | null
-}
-
 export interface SearchArtistsResponse {
   artists: RawArtist[] | null
+}
+
+export interface TopTracksResponse {
+  track: RawSong[] | null
 }
