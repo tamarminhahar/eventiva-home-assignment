@@ -131,11 +131,8 @@ npm install
 # Start development server
 npm run dev
 ```
+Create a .env file based on .env.example and set the API base URL.
 
+```
 App will run at:
-
-```
 http://localhost:<PORT>
-```
-
----
