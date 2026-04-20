@@ -2,7 +2,7 @@ export interface RawArtist {
   idArtist: string
   strArtist: string
   strArtistThumb: string | null
-  strBiographyEN: string | null
+  strBiography: string | null
 }
 
 export interface RawSong {

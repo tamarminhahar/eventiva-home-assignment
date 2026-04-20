@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 
 interface Props {
@@ -10,6 +10,10 @@ interface Props {
 
 export function SafeImage({ src, alt, className = '', fallback }: Props) {
   const [errored, setErrored] = useState(false)
+
+  useEffect(() => {
+    setErrored(false)
+  }, [src])
 
   if (!src || errored) {
     return fallback ? (

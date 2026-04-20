@@ -26,7 +26,6 @@ export const getArtistById = async (
 
   const url = `${API_BASE_URL}/artist.php?i=${encodeURIComponent(trimmedId)}`
   const response = await apiClient<SearchArtistsResponse>(url, signal)
-
   return response.artists?.[0] ? mapArtistDetail(response.artists[0]) : null
 }
 
@@ -36,6 +35,5 @@ export const getTopSongs = async (artistName: string, signal?: AbortSignal): Pro
 
   const url = `${API_BASE_URL}/track-top10.php?s=${encodeURIComponent(trimmed)}`
   const response = await apiClient<TopTracksResponse>(url, signal)
-  console.log('raw top tracks response', response)
   return response.track?.map(mapSong) ?? []
 }

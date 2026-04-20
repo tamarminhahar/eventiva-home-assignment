@@ -1,6 +1,5 @@
 /// <reference types="vite/client" />
 
-// const BASE_URL = `https://www.theaudiodb.com/api/v1/json/${import.meta.env.VITE_AUDIODB_KEY}`
 const BASE_URL = import.meta.env.VITE_AUDIODB_BASE_URL
 const API_KEY = import.meta.env.VITE_AUDIODB_KEY
 

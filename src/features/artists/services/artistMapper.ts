@@ -12,7 +12,7 @@ export const mapArtistDetail = (raw: RawArtist): ArtistDetail => ({
   id: raw.idArtist,
   name: raw.strArtist,
   imageUrl: raw.strArtistThumb || null,
-  biography: raw.strBiographyEN || null,
+  biography: raw.strBiography || null,
 })
 
 export const mapSong = (raw: RawSong): Song => ({

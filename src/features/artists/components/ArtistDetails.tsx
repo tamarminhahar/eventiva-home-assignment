@@ -5,30 +5,28 @@ import { useTopSongs } from '../hooks/useTopSongs'
 import { SafeImage } from '@/shared/components/SafeImage'
 import { TopSongsList } from './TopSongsList'
 import { GlobalError } from '@/shared/components/GlobalError'
-
-function SkeletonDetail() {
-  return (
-    <div className="animate-pulse space-y-6">
-      <div className="h-64 w-full rounded-2xl bg-gray-200 sm:h-80" />
-      <div className="h-8 w-1/2 rounded bg-gray-200" />
-      <div className="space-y-2">
-        <div className="h-4 rounded bg-gray-200" />
-        <div className="h-4 w-5/6 rounded bg-gray-200" />
-        <div className="h-4 w-4/6 rounded bg-gray-200" />
-      </div>
-    </div>
-  )
-}
-
+import { useState } from 'react'
+import { SkeletonText } from '@/shared/components/SkeletonText'
+import { SkeletonImage } from '@/shared/components/SkeletonImage'
 export function ArtistDetails() {
   const { id } = Route.useParams()
   const { data: artist, isLoading, isError, refetch } = useArtistDetails(id)
   const { data: songs = [], isLoading: songsLoading } = useTopSongs(artist?.name ?? '')
-
+  const [isExpanded, setIsExpanded] = useState(false)
   if (isLoading) {
     return (
-      <div className="mx-auto max-w-2xl px-4 py-16">
-        <SkeletonDetail />
+      <div className="mx-auto max-w-2xl space-y-6 px-4 py-16">
+        <div className="flex justify-center rounded-2xl bg-gray-100 p-6">
+          <SkeletonImage className="h-64 w-64 rounded-2xl sm:h-80 sm:w-80" />
+        </div>
+
+        <SkeletonText className="h-8 w-1/2" />
+
+        <div className="space-y-2">
+          <SkeletonText />
+          <SkeletonText className="w-5/6" />
+          <SkeletonText className="w-4/6" />
+        </div>
       </div>
     )
   }
@@ -70,9 +68,23 @@ export function ArtistDetails() {
 
             <div>
               <h2 className="mb-3 text-base font-semibold text-gray-900">Biography</h2>
-              <p className="text-sm leading-relaxed text-gray-600">
+
+              <p
+                className={`text-sm leading-relaxed text-gray-600 ${
+                  isExpanded ? '' : 'line-clamp-3'
+                }`}
+              >
                 {artist.biography || 'No biography available.'}
               </p>
+
+              {artist.biography && (
+                <button
+                  onClick={() => setIsExpanded((prev) => !prev)}
+                  className="mt-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+                >
+                  {isExpanded ? 'Show less ▲' : 'Show more ▼'}
+                </button>
+              )}
             </div>
             {/* // API currently returns limited results (free tier), UI supports up to 3 items */}
             <div>
@@ -80,7 +92,7 @@ export function ArtistDetails() {
               {songsLoading ? (
                 <div className="animate-pulse space-y-2">
                   {[1, 2, 3].map((i) => (
-                    <div key={i} className="h-10 rounded-lg bg-gray-100" />
+                    <SkeletonText key={i} className="h-10 rounded-lg bg-gray-100" />
                   ))}
                 </div>
               ) : (

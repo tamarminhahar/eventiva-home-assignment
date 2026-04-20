@@ -2,20 +2,10 @@ import { useArtistSearch } from '../hooks/useArtistSearch'
 import { ArtistCard } from './ArtistCard'
 import { EmptyState } from '@/shared/components/EmptyState'
 import { GlobalError } from '@/shared/components/GlobalError'
-
+import { SkeletonText } from '@/shared/components/SkeletonText'
+import { SkeletonImage } from '@/shared/components/SkeletonImage'
 interface Props {
   searchTerm: string
-}
-
-function SkeletonCard() {
-  return (
-    <div className="animate-pulse overflow-hidden rounded-xl border border-gray-100">
-      <div className="aspect-square bg-gray-200" />
-      <div className="px-3 py-2.5">
-        <div className="h-4 w-3/4 rounded bg-gray-200" />
-      </div>
-    </div>
-  )
 }
 
 export function ArtistList({ searchTerm }: Props) {
@@ -25,11 +15,16 @@ export function ArtistList({ searchTerm }: Props) {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <SkeletonCard key={i} />
+      <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {[1, 2, 3, 4].map((i) => (
+          <li key={i} className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+            <div className="flex items-center gap-4">
+              <SkeletonImage className="h-16 w-16 rounded-xl" />
+              <SkeletonText className="w-1/2" />
+            </div>
+          </li>
         ))}
-      </div>
+      </ul>
     )
   }
 
