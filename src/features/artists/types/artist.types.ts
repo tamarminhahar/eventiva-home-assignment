@@ -10,10 +10,3 @@ export interface ArtistDetail {
   imageUrl: string | null
   biography: string | null
 }
-
-export interface Track {
-  id: string
-  name: string
-  duration: string | null
-  album: string | null
-}
