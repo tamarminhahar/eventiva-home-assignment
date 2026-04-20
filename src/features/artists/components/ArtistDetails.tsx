@@ -1,4 +1,5 @@
-import { Link, useParams } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
+import { Route } from '@/routes/artist.$id'
 import { useArtistDetails } from '../hooks/useArtistDetails'
 import { useTopSongs } from '../hooks/useTopSongs'
 import { SafeImage } from '@/shared/components/SafeImage'
@@ -20,7 +21,7 @@ function SkeletonDetail() {
 }
 
 export function ArtistDetails() {
-  const { id } = useParams({ from: '/artist/$id' })
+  const { id } = Route.useParams()
   const { data: artist, isLoading, isError, refetch } = useArtistDetails(id)
   const { data: songs = [], isLoading: songsLoading } = useTopSongs(artist?.name ?? '')
 
@@ -67,12 +68,13 @@ export function ArtistDetails() {
           <div className="space-y-6 p-6">
             <h1 className="text-3xl font-bold text-gray-900">{artist.name}</h1>
 
-            {artist.biography && (
-              <p className="line-clamp-6 text-sm leading-relaxed text-gray-600">
-                {artist.biography}
+            <div>
+              <h2 className="mb-3 text-base font-semibold text-gray-900">Biography</h2>
+              <p className="text-sm leading-relaxed text-gray-600">
+                {artist.biography || 'No biography available.'}
               </p>
-            )}
-
+            </div>
+            {/* // API currently returns limited results (free tier), UI supports up to 3 items */}
             <div>
               <h2 className="mb-3 text-base font-semibold text-gray-900">Top Songs</h2>
               {songsLoading ? (

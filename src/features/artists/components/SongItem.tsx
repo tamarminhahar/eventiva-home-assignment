@@ -1,16 +1,8 @@
 import type { Song } from '../types/song.types'
-
+import { formatDuration } from '../utils/formatDuration'
 interface Props {
   song: Song
   index: number
-}
-
-function formatDuration(ms: string | null): string {
-  if (!ms) return '—'
-  const totalSec = Math.floor(Number(ms) / 1000)
-  const m = Math.floor(totalSec / 60)
-  const s = totalSec % 60
-  return `${m}:${s.toString().padStart(2, '0')}`
 }
 
 export function SongItem({ song, index }: Props) {
